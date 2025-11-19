@@ -33,12 +33,12 @@ define(function(require) {
 
         print_sections: {
             name: 'print_sections',
-            value: false
+            value: true
         },
 
         print_synopsis: {
             name: 'print_synopsis',
-            value: false
+            value: true
         },
 
         print_actions: {
@@ -65,12 +65,12 @@ define(function(require) {
 
         text_more: {
             name: 'text_more',
-            value: '(MORE)'
+            value: '（未完）'
         },
 
         text_contd: {
             name: 'text_contd',
-            value: "(CONT'D)"
+            value: '（续）'
         },
 
         split_dialogue: {
@@ -82,7 +82,7 @@ define(function(require) {
 
         font_family: {
             name: 'font_family',
-            value: 'CourierPrime'
+            value: 'NotoSansSC'
         },
 
         print_profile: {
@@ -112,7 +112,7 @@ define(function(require) {
 
         text_scene_continued: {
             name: 'text_scene_continued',
-            value: 'CONTINUED'
+            value: '未完待续'
         },
 
         number_sections: {

@@ -37,21 +37,9 @@ define(function(require) {
 
         $saveFountainLocally: null,
 
-        $saveFountainDropbox: null,
-
-        $saveFountainGoogleDrive: null,
-
         $autoSave: null,
         
         $autoLoad: null,
-        
-        $saveDropbox: null,
-        
-        $saveGoogleDrive: null,
-
-        displayOpenFromDropbox: false,
-
-        displayOpenFromGoogleDrive: false,
         
         addBindings: function() {
             Protoplast.utils.bind(this, {
@@ -60,16 +48,12 @@ define(function(require) {
                 syncAvailable: [this._updateSyncAvailability, this._updateSync],
                 autoSaveAvailable: [this._updateAutoSaveAvailability, this._updateAutoSave],
                 saveInProgress: this._updateAnimation,
-                pendingChanges: this._updateAnimation,
-                displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
-                displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
+                pendingChanges: this._updateAnimation
             });
         },
         
         addInteractions: function() {
             this.$saveFountainLocally.click(this.dispatch.bind(this, 'save-as-fountain'));
-            this.$saveFountainDropbox.click(this.dispatch.bind(this, 'dropbox-fountain'));
-            this.$saveFountainGoogleDrive.click(this.dispatch.bind(this, 'google-drive-fountain'));
     
             this.$autoLoad.click(function() {
                 if (this.isSyncEnabled) {
@@ -136,21 +120,6 @@ define(function(require) {
             }
         },
         
-        _updateOpenFromDropboxVisibility: function() {
-            if (this.displayOpenFromDropbox) {
-                this.$saveDropbox.show();
-            } else {
-                this.$saveDropbox.hide();
-            }
-        },
-
-        _updateOpenFromGoogleDriveVisibility: function() {
-            if (this.displayOpenFromGoogleDrive) {
-                this.$saveGoogleDrive.show();
-            } else {
-                this.$saveGoogleDrive.hide();
-            }
-        }
     });
 });
 

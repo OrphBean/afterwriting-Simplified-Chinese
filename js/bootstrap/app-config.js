@@ -8,6 +8,7 @@ define(function(require) {
         Storage = require('core/model/storage'),
         GoogleAnalyticsMonitor = require('core/controller/google-analytics-monitor'),
         InfoPlugin = require('plugin/info/info-plugin'),
+        HelpPlugin = require('plugin/help/help-plugin'),
         IoPlugin = require('plugin/io/io-plugin'),
         EditorPlugin = require('plugin/editor/editor-plugin'),
         StatsPlugin = require('plugin/stats/stats-plugin'),
@@ -41,7 +42,7 @@ define(function(require) {
         /**
          * Order in which sections are organised in the menu
          */
-        sectionsOrder: ['info', 'open', 'settings', 'editor', 'save', 'preview', 'facts', 'stats'],
+        sectionsOrder: ['info', 'help', 'open', 'settings', 'editor', 'save', 'preview', 'facts', 'stats'],
 
         init: function(context) {
             
@@ -59,6 +60,7 @@ define(function(require) {
             // TODO: Disallow injecting plugin's controllers between each other (++)
             // TODO: Disallow injecting objects directly to views (++)
             context.register(InfoPlugin.create(context));
+            context.register(HelpPlugin.create(context));
             context.register(IoPlugin.create(context));
             context.register(EditorPlugin.create(context));
             context.register(StatsPlugin.create(context));

@@ -16,42 +16,13 @@ define(function(require) {
 
         $saveLocally: null,
 
-        $saveDropbox: null,
-
-        $saveGoogleDrive: null,
-
-        displayOpenFromDropbox: false,
-
-        displayOpenFromGoogleDrive: false,
-
         addBindings: function() {
-            Protoplast.utils.bind(this, {
-                displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
-                displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
-            });
         },
 
         addInteractions: function() {
             this.$saveLocally.click(this.dispatch.bind(this, 'save-as-pdf'));
-            this.$saveDropbox.click(this.dispatch.bind(this, 'dropbox-pdf'));
-            this.$saveGoogleDrive.click(this.dispatch.bind(this, 'google-drive-pdf'));
         },
 
-        _updateOpenFromDropboxVisibility: function() {
-            if (this.displayOpenFromDropbox) {
-                this.$saveDropbox.show();
-            } else {
-                this.$saveDropbox.hide();
-            }
-        },
-
-        _updateOpenFromGoogleDriveVisibility: function() {
-            if (this.displayOpenFromGoogleDrive) {
-                this.$saveGoogleDrive.show();
-            } else {
-                this.$saveGoogleDrive.hide();
-            }
-        }
 
     });
 });

@@ -17,17 +17,9 @@ define(function(require) {
         
         lastUsedInfo: null,
 
-        displayOpenFromDropbox: false,
-
-        displayOpenFromGoogleDrive: false,
-
         $openNew: null,
 
         $openLocalFile: null,
-
-        $openDropboxFile: null,
-
-        $openGoogleDriveFile: null,
 
         $create: function() {
             this.$lastUsed.hide();
@@ -35,9 +27,7 @@ define(function(require) {
 
         addBindings: function() {
             Protoplast.utils.bind(this, {
-                lastUsedInfo: this._updateLastUsedInfo,
-                displayOpenFromDropbox: this._updateOpenFromDropboxVisibility,
-                displayOpenFromGoogleDrive: this._updateOpenFromGoogleDriveVisibility
+                lastUsedInfo: this._updateLastUsedInfo
             });
         },
         
@@ -54,8 +44,6 @@ define(function(require) {
             });
             
             this.$lastUsedTitle.click(self.dispatch.bind(this, 'open-last-used'));
-            this.$openDropboxFile.click(self.dispatch.bind(this, 'open-from-dropbox'));
-            this.$openGoogleDriveFile.click(self.dispatch.bind(this, 'open-from-google-drive'));
 
             this._resetFileInput();
 
@@ -83,22 +71,6 @@ define(function(require) {
                 this.dispatch('open-file', selected_file);
                 this._resetFileInput();
             }.bind(this));
-        },
-
-        _updateOpenFromDropboxVisibility: function() {
-            if (this.displayOpenFromDropbox) {
-                this.$openDropboxFile.parent().show();
-            } else {
-                this.$openDropboxFile.parent().hide();
-            }
-        },
-
-        _updateOpenFromGoogleDriveVisibility: function() {
-            if (this.displayOpenFromGoogleDrive) {
-                this.$openGoogleDriveFile.parent().show();
-            } else {
-                this.$openGoogleDriveFile.parent().hide();
-            }
         },
 
         _updateLastUsedInfo: function() {

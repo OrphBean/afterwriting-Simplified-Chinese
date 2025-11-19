@@ -6,9 +6,9 @@ define(function(require) {
     var MainInfo = BaseComponent.extend({
 
         html: '<div class="appInfo">' +
-            '<p><b>’afterwriting</b> turns <a href="https://fountain.io" target="_blank">.fountain</a> screenplays into beautiful PDFs. Free, open-source, offline-first. No registration, no ads, no fuss. ' +
-            '<p>Start by using the menu above to <span data-comp="switchToInfo" class="switch" href="#"></span> or <span data-comp="switchToOpen" class="switch" href="#" section="open"></span>.</p>' +
-            '<p style="padding-top: 30px"><a href="./privacy.html" target="_blank">Privacy Policy</a> | <a href="./terms.html" target="_blank">Terms of Service</a> | <a href="https://github.com/ifrost/afterwriting-labs" target="_blank">Source Code</a></p></p>' +
+            '<p><b>’afterwriting</b> 将 Fountain 剧本转换为精美 PDF。免费、开源、离线优先。无需注册、无广告、简单易用。</p>' +
+            '<p>从上方菜单开始，<span data-comp="switchToInfo" class="switch" href="#"></span>或<span data-comp="switchToOpen" class="switch" href="#" section="open"></span>。</p>' +
+            '<p style="padding-top: 30px"><a href="./privacy.html" target="_blank">隐私政策</a> | <a href="./terms.html" target="_blank">服务条款</a></p>' +
             '</div>',
 
         $meta: {
@@ -25,10 +25,10 @@ define(function(require) {
 
         addInteractions: function() {
             this.switchToOpen.sectionName = 'open';
-            this.switchToOpen.title = "open a new file";
+            this.switchToOpen.title = "打开新文件";
 
             this.switchToInfo.sectionName = 'info';
-            this.switchToInfo.title = "get more details";
+            this.switchToInfo.title = "了解更多";
         },
 
         left: {

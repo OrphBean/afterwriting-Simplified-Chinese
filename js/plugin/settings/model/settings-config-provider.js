@@ -25,76 +25,75 @@ define(function(require) {
         },
 
         getPrintGroup: function() {
-            var printGroup = SettingsGroup.create('Print');
+            var printGroup = SettingsGroup.create('打印');
 
-            printGroup.addEntry(this.createDropdown('print_profile', 'Page size', [{label: 'A4', value: 'a4'}, {label: 'US letter', value: 'usletter'}]));
-            printGroup.addEntry(this.createDropdown('font_family', 'Font', fontLoaders.fontsList.map(function(font) {
+            printGroup.addEntry(this.createDropdown('print_profile', '页面尺寸', [{label: 'A4', value: 'a4'}, {label: 'US letter', value: 'usletter'}]));
+            printGroup.addEntry(this.createDropdown('font_family', '字体', fontLoaders.fontsList.map(function(font) {
                 return {
                     label: font.label,
                     value: font.name
                 };
             })));
-            printGroup.addEntry(this.createCheckbox('print_title_page', 'Print title page'));
-            printGroup.addEntry(this.createCheckbox('print_sections', 'Print sections'));
-            printGroup.addEntry(this.createCheckbox('print_synopsis', 'Print synopsis'));
-            printGroup.addEntry(this.createCheckbox('print_notes', 'Print notes'));
-            printGroup.addEntry(this.createCheckbox('print_headers', 'Print headers'));
-            printGroup.addEntry(this.createCheckbox('print_actions', 'Print actions'));
-            printGroup.addEntry(this.createCheckbox('print_dialogues', 'Print dialogue'));
-            printGroup.addEntry(this.createInput('print_header', 'Header'));
-            printGroup.addEntry(this.createInput('print_footer', 'Footer'));
-            printGroup.addEntry(this.createInput('print_watermark', 'Watermark'));
+            printGroup.addEntry(this.createCheckbox('print_title_page', '打印标题页'));
+            printGroup.addEntry(this.createCheckbox('print_sections', '打印章节'));
+            printGroup.addEntry(this.createCheckbox('print_synopsis', '打印概要'));
+            printGroup.addEntry(this.createCheckbox('print_notes', '打印备注'));
+            printGroup.addEntry(this.createCheckbox('print_headers', '打印页眉'));
+            printGroup.addEntry(this.createCheckbox('print_actions', '打印动作描述'));
+            printGroup.addEntry(this.createCheckbox('print_dialogues', '打印对白'));
+            printGroup.addEntry(this.createInput('print_header', '页眉'));
+            printGroup.addEntry(this.createInput('print_footer', '页脚'));
+            printGroup.addEntry(this.createInput('print_watermark', '水印'));
             return printGroup;
         },
 
         getLayoutGroup: function() {
-            var layoutGroup = SettingsGroup.create('Layout');
-            layoutGroup.addEntry(this.createCheckbox('split_dialogue', 'Split dialogue between pages'));
-            layoutGroup.addEntry(this.createCheckbox('use_dual_dialogue', 'Accept dual dialogue'));
-            layoutGroup.addEntry(this.createCheckbox('double_space_between_scenes', 'Double space between scenes'));
-            layoutGroup.addEntry(this.createCheckbox('each_scene_on_new_page', 'Page break after a scene'));
-            layoutGroup.addEntry(this.createCheckbox('number_sections', 'Prefix sections with numbers'));
-            layoutGroup.addEntry(this.createCheckbox('embolden_scene_headers', 'Embolden scene headers'));
-            layoutGroup.addEntry(this.createCheckbox('underline_scene_headers', 'Underline scene headers'));
-            layoutGroup.addEntry(this.createDropdown('scenes_numbers', 'Scene numbers', [
-                {label: 'none', value: 'none'},
-                {label: 'left', value: 'left'},
-                {label: 'right', value: 'right'},
-                {label: 'both', value: 'both'}
+            var layoutGroup = SettingsGroup.create('布局');
+            layoutGroup.addEntry(this.createCheckbox('split_dialogue', '跨页分割对白'));
+            layoutGroup.addEntry(this.createCheckbox('use_dual_dialogue', '接受双栏对白'));
+            layoutGroup.addEntry(this.createCheckbox('double_space_between_scenes', '场景间双倍行距'));
+            layoutGroup.addEntry(this.createCheckbox('each_scene_on_new_page', '场景后分页'));
+            layoutGroup.addEntry(this.createCheckbox('number_sections', '章节编号'));
+            layoutGroup.addEntry(this.createCheckbox('embolden_scene_headers', '场景标题加粗'));
+            layoutGroup.addEntry(this.createCheckbox('underline_scene_headers', '场景标题下划线'));
+            layoutGroup.addEntry(this.createDropdown('scenes_numbers', '场景编号', [
+                {label: '无', value: 'none'},
+                {label: '左侧', value: 'left'},
+                {label: '右侧', value: 'right'},
+                {label: '两侧', value: 'both'}
             ]));
-            layoutGroup.addEntry(this.createCheckbox('scene_continuation_bottom', 'Scene continuation (the bottom of a page)'));
-            layoutGroup.addEntry(this.createCheckbox('scene_continuation_top', 'Scene continuation (the top of the next page)'));
-            layoutGroup.addEntry(this.createCheckbox('merge_empty_lines', 'Merge empty lines'));
+            layoutGroup.addEntry(this.createCheckbox('scene_continuation_bottom', '场景延续（页面底部）'));
+            layoutGroup.addEntry(this.createCheckbox('scene_continuation_top', '场景延续（下一页顶部）'));
+            layoutGroup.addEntry(this.createCheckbox('merge_empty_lines', '合并空行'));
             return layoutGroup;
         },
 
         getTextGroup: function() {
-            var textGroup = SettingsGroup.create('Text');
-            textGroup.addEntry(this.createInput('text_more', 'Override (MORE) text to'));
-            textGroup.addEntry(this.createInput('text_contd', "Override (CONT'D) text to"));
-            textGroup.addEntry(this.createInput('text_scene_continued', 'Override CONTINUED (scene continuation) text to'));
+            var textGroup = SettingsGroup.create('文本');
+            textGroup.addEntry(this.createInput('text_more', '覆盖（未完）文本为'));
+            textGroup.addEntry(this.createInput('text_contd', '覆盖（续）文本为'));
+            textGroup.addEntry(this.createInput('text_scene_continued', '覆盖场景延续文本为'));
             return textGroup;
         },
 
         getMiscellaneousGroup: function() {
-            var miscellaneousGroup = SettingsGroup.create('Miscellaneous');
-            miscellaneousGroup.addEntry(this.createCheckbox('show_background_image','Show background image'));
-            miscellaneousGroup.addEntry(this.createCheckbox('load_last_opened','Load last opened on startup'));
-            miscellaneousGroup.addEntry(this.createCheckbox('night_mode','Night mode'));
+            var miscellaneousGroup = SettingsGroup.create('其他');
+            miscellaneousGroup.addEntry(this.createCheckbox('show_background_image','显示背景图片'));
+            miscellaneousGroup.addEntry(this.createCheckbox('load_last_opened','启动时加载上次打开的文件'));
+            miscellaneousGroup.addEntry(this.createCheckbox('night_mode','夜间模式'));
             return miscellaneousGroup;
         },
 
         getStatsGroup: function() {
-            var statsGroup = SettingsGroup.create('Statistics');
-            statsGroup.addEntry(this.createCheckbox('stats_keep_last_scene_time', 'Keep last scene slugline time of day if not specified'));
-            statsGroup.addEntry(this.createInput('stats_who_with_who_max', '"Who with whom" max characters'));
+            var statsGroup = SettingsGroup.create('统计');
+            statsGroup.addEntry(this.createCheckbox('stats_keep_last_scene_time', '未指定时保留上一场景的时间'));
+            statsGroup.addEntry(this.createInput('stats_who_with_who_max', '“谁与谁”最大字符数'));
             return statsGroup;
         },
 
         getExperimentalGroup: function() {
-            var experimentalGroup = SettingsGroup.create('Experimental');
-            experimentalGroup.addEntry(this.createCheckbox('cloud_lazy_loading', 'GoogleDrive/Dropbox lazy loading'));
-            experimentalGroup.addEntry(this.createCheckbox('pdfjs_viewer', 'JavaScript PDF viewer'));
+            var experimentalGroup = SettingsGroup.create('实验性功能');
+            experimentalGroup.addEntry(this.createCheckbox('pdfjs_viewer', 'JavaScript PDF查看器'));
             return experimentalGroup;
         },
 

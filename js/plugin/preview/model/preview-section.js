@@ -6,9 +6,9 @@ define(function(require) {
 
     var PreviewSection = Section.extend({
         
-        title: 'Preview',
+        title: '预览',
 
-        shortTitle: 'view',
+        shortTitle: '预览',
 
         smallIcon: 'gfx/icons/preview.svg',
 

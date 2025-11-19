@@ -53,9 +53,9 @@ define(function(require) {
         },
 
         _updateBackgroundImage: function() {
-            var max_backgrounds = 7;
+            var max_backgrounds = 6;
             if (this.themeModel.backgroundImageVisible) {
-                $('html').css('background-image', 'url(' + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.jpg)');
+                $('html').css('background-image', 'url(' + 'gfx/bg' + Math.floor(Math.random() * max_backgrounds) + '.png)');
             }
             else {
                 $('html').css('background-image', '');

@@ -6,15 +6,15 @@ define(function(require) {
 
     var EditorSection = Section.extend({
         
-        title: 'Fountain Editor',
+        title: 'Fountain编辑器',
 
-        shortTitle: 'write',
+        shortTitle: '编辑',
 
         smallIcon: 'gfx/icons/editor.svg',
 
         isVisibleInMenu: false,
 
-        description: 'Just a basic fountain editor. Use Ctrl-Space for auto-complete. Go to <a href="http://fountain.io" target="_blank">fountain.io</a> for more details about Fountain format.<br/> Use auto-save to automatically save your changes to the cloud every 3 seconds.<br />Use auto-reload to reload the script from the cloud/disk to see PDF, facts & stats changes.',
+        description: '一个简洁的 Fountain 编辑器。使用 Ctrl-Space 进行自动完成。访问 <a href="http://fountain.io" target="_blank">fountain.io</a> 了解更多 Fountain 格式详情。<br/>点击眼睛图标打开预览功能，实时查看剧本格式化效果。<br />使用保存功能将剧本下载为 .fountain 文件，或导出为 PDF。',
 
         MainContent: {
             value: EditorView

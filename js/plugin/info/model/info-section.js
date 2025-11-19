@@ -9,9 +9,9 @@ define(function(require) {
      */
     var InfoSection = Section.extend({
         
-        title: 'About',
+        title: '关于',
 
-        shortTitle: 'info',
+        shortTitle: '信息',
 
         smallIcon: 'gfx/icons/info.svg',
 

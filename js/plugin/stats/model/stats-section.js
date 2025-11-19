@@ -5,9 +5,9 @@ define(function(require) {
     
     var FactsSection = Section.extend({
         
-        title: 'Useless Stats',
+        title: '统计数据',
 
-        shortTitle: 'stats',
+        shortTitle: '统计',
 
         smallIcon: 'gfx/icons/stats.svg',
 

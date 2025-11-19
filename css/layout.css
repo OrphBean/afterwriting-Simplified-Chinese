@@ -76,6 +76,7 @@ p {
     padding: 60px 0 20px 0;
     text-align: center;
     font-family: 'Day Roman', serif;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.9), 2px 2px 4px rgba(0, 0, 0, 1);
 }
 
 .logo__after {
@@ -116,8 +117,10 @@ p {
     float: left;
     margin: 10px;
     border-radius: 50%;
-    border: 5px solid #eee;
-    opacity: 0.8;
+    border: 6px solid #ffffff;
+    opacity: 0.95;
+    background-color: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 .menu-item span {
@@ -128,8 +131,8 @@ p {
 /** menu mouse over **/
 .menu-item--hover {
     opacity: 1.0;
-    border: 5px solid #aaaaaa;
-    background-color: rgba(238, 238, 238, 0.5);
+    border: 6px solid #ffffff;
+    background-color: rgba(255, 255, 255, 0.7);
     -webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;

@@ -1,15 +1,12 @@
 define(function(require) {
 
     var Protoplast = require('protoplast'),
-        db = require('utils/dropbox'),
-        gd = require('utils/googledrive'),
         local = require('utils/local'),
         tree = require('utils/tree'),
         helper = require('utils/helper'),
         EditorController = require('plugin/editor/controller/editor-controller'),
         LastUsedInfo = require('plugin/io/model/last-used-info'),
         IoModel = require('plugin/io/model/io-model'),
-        SaveController = require('plugin/io/controller/save-controller'),
         ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         samples = require('samples');
     
@@ -39,10 +36,6 @@ define(function(require) {
             inject: IoModel
         },
 
-        saveController: {
-            inject: SaveController
-        },
-        
         editorController:{
             inject: EditorController
         },
@@ -52,12 +45,6 @@ define(function(require) {
         },
 
         init: function() {
-
-            gd.init();
-            db.init();
-
-            this.saveController.on('fountain-saved-to-google-drive', this._savedToGoogleDrive);
-            this.saveController.on('fountain-saved-to-dropbox', this._savedToDropbox);
 
             Protoplast.utils.bind(this.scriptModel, 'script', function () {
                 var title = '';
@@ -96,7 +83,9 @@ define(function(require) {
         },
 
         createNew: function() {
-            this._setScript('');
+            // Chinese title page template
+            var chineseTemplate = '标题: \n署名: \n作者: \n联系: \n版权: \n草稿: \n草稿日期: \n\n';
+            this._setScript(chineseTemplate);
         },
 
         openSample: function(name) {
@@ -123,81 +112,11 @@ define(function(require) {
             fileReader.readAsText(selectedFile);
         },
 
-        openFromDropbox: function() {
-            this._openFromCloud(db, this._openFromDropbox, function (selected) {
-                db.load_file(selected.data.path, function (content) {
-                    this._setScript(content);
-                    this.ioModel.dbPath = selected.data.path;
-                    this.pub('plugin/io/opened-from-dropbox', this.scriptModel.format);
-                }.bind(this));
-            }.bind(this));
-        },
-
-        openFromGoogleDrive: function () {
-            this._openFromCloud(gd, this.openFromGoogleDrive, function (selected) {
-                gd.load_file(selected.data.id, function (content, link, fileid) {
-                    this._setScript(content);
-                    this.ioModel.gdLink = link;
-                    this.ioModel.gdFileId = fileid;
-                    this.ioModel.gdParents = selected.parents.slice(0, selected.parents.length-2).reverse();
-                    this.pub('plugin/io/opened-from-google-drive', this.scriptModel.format);
-                }.bind(this));
-            }.bind(this));
-        },
-
         _openLastUsedOnStartup: function() {
             if (this.settings.load_last_opened) {
                 this.openLastUsed();
                 this.pub('plugin/io/startup/opened-last-used');
             }
-        },
-
-        _savedToGoogleDrive: function(item) {
-            this._clearLastOpened();
-            this.ioModel.gdLink = item.alternateLink;
-            this.ioModel.gdFileId = item.id;
-            this.ioModel.fileName = '';
-        },
-
-        _savedToDropbox: function(path) {
-            this._clearLastOpened();
-            this.ioModel.dbPath = path;
-            this.ioModel.fileName = '';
-        },
-
-        _openFromCloud: function (client, back_callback, load_callback) {
-            client.list(function (root) {
-                root = typeof root !== 'function' ? client.convert_to_jstree(root) : root;
-                tree.show({
-                    info: 'Please select file to open.',
-                    data: root,
-                    label: 'Open',
-                    search: !this.settings.cloud_lazy_loading,
-                    callback: function (selected) {
-                        if (selected.data.isFolder) {
-                            $.prompt('Please select a file, not folder.', {
-                                buttons: {
-                                    'Back': true,
-                                    'Cancel': false
-                                },
-                                submit: function (v) {
-                                    if (v) {
-                                        back_callback();
-                                    }
-                                }
-                            });
-                        } else {
-                            load_callback(selected);
-                        }
-                    }
-                });
-            }.bind(this), {
-                before: function () {
-                    $.prompt('Please wait...');
-                },
-                after: $.prompt.close,
-                lazy: this.settings.cloud_lazy_loading
-            });
         },
 
         _setScript: function(value) {
@@ -213,11 +132,6 @@ define(function(require) {
 
         _clearLastOpened: function() {
             this.scriptModel.format = undefined;
-            this.ioModel.dbPath = '';
-            this.ioModel.gdLink = '';
-            this.ioModel.gdFileId = '';
-            this.ioModel.gdPdfId = '';
-            this.ioModel.dbPdfPath = '';
             this.ioModel.fountainFileName = '';
             this.ioModel.pdfFileName = '';
             local.local_file = null;

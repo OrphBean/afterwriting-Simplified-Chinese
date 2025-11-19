@@ -93,32 +93,32 @@ define(function(require) {
             this.locationsBreakdown = LocationsBreakdown;
 
             this.whoWithWhoHeader.id = "stats-who";
-            this.whoWithWhoHeader.title = "Who talks with whom (by number of scenes)";
-            this.whoWithWhoHeader.description = "Each character is represented by a circle (max. 10 characters). If characters are connected with a line that means they are talking in the same scene. Thicker the line - more scenes together. Hover the mouse cursor over a character circle to see how many dialogues scenes that character have with other characters.";
+            this.whoWithWhoHeader.title = "谁与谁对话（按场景数）";
+            this.whoWithWhoHeader.description = "每个人物由一个圆圈表示（最多 10 个人物）。如果人物之间有线连接，表示他们在同一场景中对话。线条越粗，共同出现的场景越多。将鼠标悬停在人物圆圈上，可查看该人物与其他人物的对话场景数。";
 
             this.scriptPulseHeader.id = "stats-tempo";
-            this.scriptPulseHeader.title = "Script Pulse";
-            this.scriptPulseHeader.description = "Short scenes and short action/dialogue blocks bump the tempo up. Long scenes and long blocks set it back.";
+            this.scriptPulseHeader.title = "剧本节奏";
+            this.scriptPulseHeader.description = "短场景和短动作/对白段落会加快节奏。长场景和长段落会减慢节奏。";
 
             this.sceneLengthHeader.id = "stats-scene-length";
-            this.sceneLengthHeader.title = "Scene length";
-            this.sceneLengthHeader.description = "Each bar represent one scene (white bars for day scenes, black bars for night scenes). Hover the mouse cursor over a bar to see estimated time of a scene. You can click on a bar to jump to selected scene in the editor.";
+            this.sceneLengthHeader.title = "场景长度";
+            this.sceneLengthHeader.description = "每个条形代表一个场景（白色条形为白天场景，黑色条形为晚上场景）。将鼠标悬停在条形上可查看场景的估计时长。您可以点击条形跳转到编辑器中的相应场景。";
 
             this.locationsBreakdown.id = "stats-locations-breakdown";
-            this.locationsBreakdownHeader.title = "Locations breakdown";
+            this.locationsBreakdownHeader.title = "地点分布";
             this.locationsBreakdownHeader.description = "Blocks on the top strip represent amount of time spent in a location. If a location occurs more than once in the script, it's highlighted by a colour (white colour is used for each location occurring only once).<br />Pie chart below shows time distribution for each location. Mouse over the blocks to see corresponding data on the pie chart (and vice versa).";
 
             this.pageBalanceHeader.id = "stats-page-balance";
-            this.pageBalanceHeader.title = "Page balance";
+            this.pageBalanceHeader.title = "页面平衡";
             this.pageBalanceHeader.description = "Shows balance between action time and dialogue time on each page. Click on a page to jump to the editor.";
 
             this.daysAndNightsHeader.id = "stats-days-nights";
-            this.daysAndNightsHeader.title = "Days and nights";
-            this.daysAndNightsHeader.description = "Pie chart representing day vs night scenes breakdown. Hover over sections to see number of day/night scenes.";
+            this.daysAndNightsHeader.title = "白天与晚上";
+            this.daysAndNightsHeader.description = "饼图显示白天与晚上场景的分布。将鼠标悬停在区域上可查看白天/晚上场景的数量。";
 
             this.intVsExtHeader.id = "stats-int-ext";
-            this.intVsExtHeader.title = "INT. vs EXT.";
-            this.intVsExtHeader.description = "Pie chart representing interior vs exterior scenes breakdown. Hover over sections to see number of int/ext scenes.";
+            this.intVsExtHeader.title = "内景 vs 外景";
+            this.intVsExtHeader.description = "饼图显示内景与外景场景的分布。将鼠标悬停在区域上可查看内景/外景场景的数量。";
         },
 
         addBindings: function() {
@@ -198,7 +198,7 @@ define(function(require) {
 
             this.pieChart.render('#stats-days-and-nights', this.data.days_and_nights, {
                 tooltip: function(d) {
-                    return d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes');
+                    return d.data.label + ': ' + d.data.value + (d.data.value == 1 ? ' 个场景' : ' 个场景');
                 },
                 value: 'value',
                 small: themeModel.small,
@@ -229,7 +229,7 @@ define(function(require) {
 
             this.pieChart.render('#stats-int-ext', this.data.int_and_ext, {
                 tooltip: function(d) {
-                    return int_ext_labels[d.data.label] + ': ' + d.data.value + (d.data.value == 1 ? ' scene' : ' scenes');
+                    return int_ext_labels[d.data.label] + ': ' + d.data.value + (d.data.value == 1 ? ' 个场景' : ' 个场景');
                 },
                 value: 'value',
                 small: themeModel.small,

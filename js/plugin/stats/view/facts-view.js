@@ -83,7 +83,7 @@ define(function(require) {
             $('#facts-pages').html(pages_text);
 
             $('#facts-time').html(helper.format_time(facts_data.filled_pages));
-            $('#facts-scenes').html(facts_data.scenes + ' (action only: ' + facts_data.action_scenes + ', with dialogue: ' + facts_data.dialogue_scenes + ')');
+            $('#facts-scenes').html(facts_data.scenes + ' (仅动作: ' + facts_data.action_scenes + ', 含对白: ' + facts_data.dialogue_scenes + ')');
             $('#facts-action-time').html(helper.format_time(facts_data.action_time));
             $('#facts-dialogue-time').html(helper.format_time(facts_data.dialogue_time));
 
@@ -91,7 +91,7 @@ define(function(require) {
             var character_scenes;
             for (var i = 0; i < facts_data.characters.length; i++) {
                 character_scenes = facts_data.characters[i].scenes.length;
-                character_scenes = character_scenes.toString() + (character_scenes === 1 ? ' scene' : ' scenes');
+                character_scenes = character_scenes.toString() + (character_scenes === 1 ? ' 个场景' : ' 个场景');
 
                 $('#facts-characters').append('<li class="' + (i >= 10 ? 'expandable' : '') + '">' + facts_data.characters[i].name + ' (' + helper.format_time(facts_data.characters[i].time) + ', ' + character_scenes + ')</li>');
             }

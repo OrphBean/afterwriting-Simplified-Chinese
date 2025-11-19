@@ -67,14 +67,25 @@ define('utils/pdfmaker', function(require) {
             doc.registerFont('ScriptOblique', fonts.italic);
         }
         else {
-            doc.registerFont('ScriptNormal', 'Courier');
-            doc.registerFont('ScriptBold', 'Courier-Bold');
-            doc.registerFont('ScriptBoldOblique', 'Courier-BoldOblique');
-            doc.registerFont('ScriptOblique','Courier-Oblique');
+            // Use system fonts that support Chinese characters
+            // Try to use Chinese-compatible fonts, fallback to Courier if not available
+            try {
+                doc.registerFont('ScriptNormal', 'SimSun');
+                doc.registerFont('ScriptBold', 'SimHei');
+                doc.registerFont('ScriptBoldOblique', 'SimHei');
+                doc.registerFont('ScriptOblique', 'KaiTi');
+            } catch(e) {
+                // Fallback to Courier if Chinese fonts not available
+                doc.registerFont('ScriptNormal', 'Courier');
+                doc.registerFont('ScriptBold', 'Courier-Bold');
+                doc.registerFont('ScriptBoldOblique', 'Courier-BoldOblique');
+                doc.registerFont('ScriptOblique','Courier-Oblique');
+            }
         }
 
         doc.font('ScriptNormal');
         doc.fontSize(print.font_size || 12);
+        doc.lineGap(3); // Add extra spacing between wrapped lines within paragraphs
 
         // convert points to inches for text
         doc.reset_format = function() {
@@ -147,11 +158,10 @@ define('utils/pdfmaker', function(require) {
                         underline: doc.format_state.underline,
                         lineBreak: options.line_break
                     });
-                    x += font_width * elem.length;
+                    // Use PDFKit's built-in width measurement for accurate positioning
+                    x += doc.widthOfString(elem) / 72;
                 }
             }
-
-
         };
 
         return doc;
@@ -202,10 +212,30 @@ define('utils/pdfmaker', function(require) {
         doc.info.Author = author_token ? clearFormatting(inline(author_token.text)) : '';
         doc.info.Creator = 'afterwriting.com';
 
-        // helper
+        // CJK-aware text width calculation
+        var calculateTextWidth = function(text) {
+            var width = 0;
+            for (var i = 0; i < text.length; i++) {
+                var code = text.charCodeAt(i);
+                // CJK Unified Ideographs: U+4E00 to U+9FFF
+                // CJK Extension A: U+3400 to U+4DBF
+                // Full-width characters: U+FF00 to U+FFEF
+                if ((code >= 0x4E00 && code <= 0x9FFF) ||
+                    (code >= 0x3400 && code <= 0x4DBF) ||
+                    (code >= 0xFF00 && code <= 0xFFEF)) {
+                    width += print.font_width * 1.6; // CJK characters are wider
+                } else {
+                    width += print.font_width;
+                }
+            }
+            return width;
+        };
+
+        // helper - updated to use CJK-aware width calculation
         var center = function(txt, y) {
-            var txt_length = txt.replace(/\*/g, '').replace(/_/g, '').length;
-            var feed = (print.page_width - txt_length * print.font_width) / 2;
+            var clean_txt = txt.replace(/\*/g, '').replace(/_/g, '');
+            var txt_width = calculateTextWidth(clean_txt);
+            var feed = (print.page_width - txt_width) / 2;
             doc.text(txt, feed, y);
         };
 
@@ -353,9 +383,10 @@ define('utils/pdfmaker', function(require) {
         lines.forEach(function(line) {
             if (line.type === "page_break") {
 
-                if (cfg.scene_continuation_bottom && line.scene_split) {
+                if (cfg.scene_continuation_bottom && line.scene_split && scene_number && scene_number !== '') {
                     var scene_continued_text = '(' + (cfg.text_scene_continued || 'CONTINUED') + ')';
-                    var feed = print.action.feed + print.action.max * print.font_width - scene_continued_text.length * print.font_width;
+                    var continuedWidth = calculateTextWidth(scene_continued_text);
+                    var feed = print.page_width - print.right_margin - continuedWidth;
                     doc.simple_text(scene_continued_text, feed * 72, (print.top_margin + print.font_height * (y + 2)) * 72);
                 }
 
@@ -365,7 +396,7 @@ define('utils/pdfmaker', function(require) {
 
                 var number_y = print.page_number_top_margin;
 
-                if (cfg.scene_continuation_top && line.scene_split) {
+                if (cfg.scene_continuation_top && line.scene_split && scene_number) {
                     scene_continuations[scene_number] = scene_continuations[scene_number] || 0;
                     scene_continuations[scene_number]++;
 
@@ -380,7 +411,8 @@ define('utils/pdfmaker', function(require) {
 
                 if (cfg.show_page_numbers) {
                     var page_num = page.toFixed() + ".";
-                    var number_x = print.action.feed + print.action.max * print.font_width - page_num.length * print.font_width;
+                    var pageNumWidth = calculateTextWidth(page_num);
+                    var number_x = print.page_width - print.right_margin - pageNumWidth;
                     doc.simple_text(page_num, number_x * 72, number_y * 72);
                 }
                 print_watermark();
@@ -403,7 +435,10 @@ define('utils/pdfmaker', function(require) {
                 } else {
                     var feed = (print[line.type] || {}).feed || print.action.feed;
                     if (line.type === "transition") {
-                        feed = print.action.feed + print.action.max * print.font_width - line.text.length * print.font_width;
+                        // Use CJK-aware width calculation for right-alignment
+                        // Position transitions near the right margin (around 6 inches from left)
+                        var transitionWidth = calculateTextWidth(line.text);
+                        feed = print.page_width - print.right_margin - transitionWidth;
                     }
                     if (line.type === "scene_heading" && cfg.embolden_scene_headers) {
                         text = '**' + text + '**';
@@ -474,8 +509,10 @@ define('utils/pdfmaker', function(require) {
                         }
 
                         if (cfg.scenes_numbers === 'both' || cfg.scenes_numbers === 'right') {
-                            shift_scene_number = (print.scene_heading.max + 1) * print.font_width;
-                            doc.text(scene_number, feed + shift_scene_number, print.top_margin + print.font_height * y, text_properties);
+                            // Right-align scene number from right margin
+                            var sceneNumWidth = calculateTextWidth(scene_number.replace(/\*/g, '').replace(/_/g, ''));
+                            var right_x = print.page_width - print.right_margin - sceneNumWidth;
+                            doc.text(scene_number, right_x, print.top_margin + print.font_height * y, text_properties);
                         }
                     }
 

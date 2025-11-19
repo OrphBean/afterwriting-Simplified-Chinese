@@ -3,8 +3,6 @@ define(function(require) {
     var Protoplast = require('protoplast'),
         IoModel = require('plugin/io/model/io-model'),
         converter = require('utils/converters/scriptconverter'),
-        gd = require('utils/googledrive'),
-        db = require('utils/dropbox'),
         local = require('utils/local'),
         ThemeController = require('theme/aw-bubble/controller/theme-controller'),
         EditorModel = require('plugin/editor/model/editor-model');
@@ -19,7 +17,6 @@ define(function(require) {
             inject: 'script'
         },
 
-        // TODO: decouple io? (+)
         ioModel: {
             inject: IoModel
         },
@@ -56,18 +53,12 @@ define(function(require) {
                 this.editorModel.lastSyncContent = undefined;
                 this.editorModel.contentBeforeSync = this.scriptModel.script;
                 this.setAutoSave(false);
-                if (this.ioModel.gdFileId) {
-                    gd.sync(this.ioModel.gdFileId, 3000, this._handleSync);
-                } else if (this.ioModel.dbPath) {
-                    db.sync(this.ioModel.dbPath, 3000, this._handleSync);
-                } else if (local.sync_available()) {
+                if (local.sync_available()) {
                     local.sync(3000, this._handleSync);
                 }
                 this.pub('plugin/editor/auto-reload/enabled', this._fileSource());
             }
             else {
-                gd.unsync();
-                db.unsync();
                 local.unsync();
             }
         },
@@ -114,39 +105,8 @@ define(function(require) {
             }
         },
 
-        // TODO: move to io? (+)
         _saveScript: function(callback) {
-            var blob;
-
-            if (this.ioModel.dbPath) {
-                var path = this.ioModel.dbPath;
-
-                blob = new Blob([this.scriptModel.script], {
-                    type: "text/plain;charset=utf-8"
-                });
-
-                db.save(path, blob, function() {
-                    callback(true);
-                });
-            }
-            else if (this.ioModel.gdFileId) {
-                var fileId = this.ioModel.gdFileId;
-
-                blob = new Blob([this.scriptModel.script], {
-                    type: "text/plain;charset=utf-8"
-                });
-
-                gd.upload({
-                    blob: blob,
-                    callback: function() {
-                        callback(true);
-                    },
-                    fileid: fileId
-                });
-            }
-            else {
-                callback(false);
-            }
+            callback(false);
         },
 
         goto: function(line) {
@@ -161,11 +121,7 @@ define(function(require) {
         },
 
         _fileSource: function() {
-            if (this.ioModel.gdFileId) {
-                return 'google-drive';
-            } else if (this.ioModel.dbPath) {
-                return 'dropbox';
-            } else if (local.sync_available()) {
+            if (local.sync_available()) {
                 return 'local';
             }
         }

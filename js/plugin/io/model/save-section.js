@@ -5,11 +5,11 @@ define(function(require) {
 
     var SaveSection = Section.extend({
         
-        title: 'Save',
+        title: '保存',
 
-        shortTitle: 'save',
+        shortTitle: '保存',
 
-        description: 'You can save your screenplay in Fountain or PDF format here. If you want to read your script on a mobile device, choose mobile-friendly version (font size is beefed up).',
+        description: '您可以在此处以Fountain或PDF格式保存剧本。如果您想在移动设备上阅读，请选择移动设备友好版本（字体更大）。',
 
         smallIcon: 'gfx/icons/save.svg',
 

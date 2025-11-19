@@ -7,13 +7,13 @@ define(function(require) {
 
         id: 'open-start',
 
-        title: 'Start',
+        title: '开始',
 
-        shortTitle: 'open',
+        shortTitle: '打开',
 
         smallIcon: 'gfx/icons/open.svg',
         
-        description: 'You can open a .fountain or .fdx file (it will be converted to Fountain), or use one of the samples below.',
+        description: '您可以打开.fountain或.fdx文件（将转换为Fountain格式），或使用下面的示例。',
         
         MainContent: {
             value: OpenView

@@ -7,7 +7,7 @@ define(function(require) {
         
         title: 'Settings',
 
-        shortTitle: 'setup',
+        shortTitle: '设置',
 
         smallIcon: 'gfx/icons/settings.svg',
 

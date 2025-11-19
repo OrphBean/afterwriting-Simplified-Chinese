@@ -189,19 +189,9 @@ module.exports = function(grunt) {
                 },
                 files: [
                     {
-                        src: 'bundle/**'
-                    },
-                    {
-                        src: 'gfx/**'
-                    },
-                    {
-                        src: 'afterwriting.html'
-                    },
-                    {
-                        src: 'privacy.html'
-                    },
-                    {
-                        src: 'terms.html'
+                        expand: true,
+                        src: ['bundle/**', 'gfx/**', 'afterwriting.html', 'index.html', 'privacy.html', 'terms.html', '启动说明.txt'],
+                        dest: 'afterwriting/'
                     }
                 ]
             }

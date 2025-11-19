@@ -10,21 +10,21 @@ define(function(require) {
         "a4": {
             paper_size: "a4",
             font_size: 12,
-            lines_per_page: 57,
+            lines_per_page: 50,
             top_margin: 1.0,
             page_width: 8.27,
             page_height: 11.7,
             left_margin: 1.5,
             right_margin: 1,
             font_width: 0.1,
-            font_height: 0.1667,
-            line_spacing: 1,
+            font_height: 0.19,
+            line_spacing: 1.3,
             page_number_top_margin: 0.5,
             dual_max_factor: 0.75,
             title_page: {
                 top_start: 3.5,
                 left_side: ['notes', 'copyright'],
-                right_side: ['draft date', 'date', 'contact']
+                right_side: ['draft', 'draft date', 'date', 'contact']
             },
             scene_heading: {
                 feed: 1.5,
@@ -39,20 +39,21 @@ define(function(require) {
                 max: A4_DEFAULT_MAX
             },
             character: {
-                feed: 3.5,
+                feed: 3.7,
                 max: 33
             },
             parenthetical: {
-                feed: 3,
+                feed: 3.2,
                 max: 26
             },
             dialogue: {
-                feed: 2.5,
+                feed: 2.7,
                 max: 36
             },
             transition: {
-                feed: 0.0,
-                max: A4_DEFAULT_MAX
+                feed: 5.5,
+                max: A4_DEFAULT_MAX,
+                style: 'right'
             },
             centered: {
                 feed: 1.5,
@@ -83,7 +84,7 @@ define(function(require) {
     print_profiles.usletter = JSON.parse(JSON.stringify(print_profiles.a4));
     var letter = print_profiles.usletter;
     letter.paper_size = 'letter';
-    letter.lines_per_page = 55;
+    letter.lines_per_page = 54;
     letter.page_width = 8.5;
     letter.page_height = 11;
 

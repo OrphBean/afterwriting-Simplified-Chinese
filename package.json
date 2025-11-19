@@ -29,9 +29,7 @@
     "preversion": "git fetch --tags && node tools/changelog.js https://github.com/ifrost/afterwriting-labs console",
     "build": "./node_modules/.bin/grunt build",
     "version": "npm run build && git add .",
-    "postversion": "git push --follow-tags",
-    "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
@@ -82,6 +80,5 @@
     "protoplast": "2.0.3",
     "requirejs-text": "^2.0.15",
     "stdio": "^0.2.7"
-  },
-  "snyk": true
+  }
 }
