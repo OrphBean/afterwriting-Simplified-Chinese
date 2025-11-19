@@ -31,10 +31,18 @@ This is a Chinese localization fork of [afterwriting-labs](https://github.com/if
 直接访问部署的网站即可使用。
 
 ### 离线使用 (Offline)
-1. 下载此仓库
-2. 解压文件
-3. 双击 `index.html` 或 `afterwriting.html`
-4. 开始编写剧本！
+
+**推荐方式 (Recommended):**
+1. 下载 `afterwriting.zip` 文件
+2. 解压 zip 文件
+3. 打开 `afterwriting` 文件夹
+4. 双击 `afterwriting.html` 或 `index.html`
+5. 开始编写剧本！
+
+**或者从源码 (Or from source):**
+1. 克隆此仓库
+2. 双击 `afterwriting.html` 或 `index.html`
+3. 开始编写剧本！
 
 ### 开发环境 (Development)
 ```bash
